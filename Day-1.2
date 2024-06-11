@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+data = {
+    'Individual ID': range(1, 101),
+    'Smoking Habit': np.random.randint(0, 40, 100),  
+    'Lung Cancer Incidence': np.random.choice([0, 1], 100)  
+}
+df = pd.DataFrame(data)
+print(df.head())
+
+correlation_coefficient = df['Smoking Habit'].corr(df['Lung Cancer Incidence'])
+print(f"Correlation Coefficient: {correlation_coefficient:.2f}")
+ncidence
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Smoking Habit', y='Lung Cancer Incidence', data=df)
+plt.title('Scatter Plot of Smoking Habit vs. Lung Cancer Incidence')
+plt.xlabel('Smoking Habit (Number of cigarettes per day)')
+plt.ylabel('Lung Cancer Incidence (1 = Yes, 0 = No)')
+plt.show()
