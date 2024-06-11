@@ -1,0 +1,71 @@
+import pandas as pd
+import numpy as np
+
+
+np.random.seed(42)  
+dates = pd.date_range(start='2023-01-01', periods=365, freq='D')
+categories = ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Toys']
+sales_data = {
+    'Order Date': np.random.choice(dates, 1000),
+    'Product Category': np.random.choice(categories, 1000),
+    'Sales Amount': np.random.uniform(10, 500, 1000)
+}
+
+
+df = pd.DataFrame(sales_data)
+print(df.head())
+total_sales_per_category = df.groupby('Product Category')['Sales Amount'].sum().reset_index()
+
+print(total_sales_per_category)
+plt.figure(figsize=(12, 6))
+sns.lineplot(data=total_sales_per_category, x='Product Category', y='Sales Amount', marker='o')
+plt.title('Total Sales by Product Category (Line Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
+plt.figure(figsize=(12, 6))
+sns.scatterplot(data=total_sales_per_category, x='Product Category', y='Sales Amount', s=100)
+plt.title('Total Sales by Product Category (Scatter Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
+plt.figure(figsize=(12, 6))
+sns.barplot(data=total_sales_per_category, x='Product Category', y='Sales Amount')
+plt.title('Total Sales by Product Category (Bar Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+np.random.seed(42)
+dates = pd.date_range(start='2023-01-01', periods=365, freq='D')
+categories = ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Toys']
+sales_data = {
+    'Order Date': np.random.choice(dates, 1000),
+    'Product Category': np.random.choice(categories, 1000),
+    'Sales Amount': np.random.uniform(10, 500, 1000)
+}
+
+df = pd.DataFrame(sales_data)
+total_sales_per_category = df.groupby('Product Category')['Sales Amount'].sum().reset_index()
+
+plt.figure(figsize=(12, 6))
+sns.lineplot(data=total_sales_per_category, x='Product Category', y='Sales Amount', marker='o')
+plt.title('Total Sales by Product Category (Line Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
+plt.figure(figsize=(12, 6))
+sns.scatterplot(data=total_sales_per_category, x='Product Category', y='Sales Amount', s=100)
+plt.title('Total Sales by Product Category (Scatter Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
+plt.figure(figsize=(12, 6))
+sns.barplot(data=total_sales_per_category, x='Product Category', y='Sales Amount')
+plt.title('Total Sales by Product Category (Bar Plot)')
+plt.xlabel('Product Category')
+plt.ylabel('Total Sales')
+plt.show()
