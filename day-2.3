@@ -1,0 +1,28 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample data creation (remove this part if you already have your DataFrame)
+data = {'customer_id': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'age': [25, 34, 22, 25, 45, 34, 25, 22, 22, 30]}
+
+# Replace the above with loading your data, e.g.:
+# df = pd.read_csv('your_sales_data.csv')
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Calculate frequency distribution of ages
+age_distribution = df['age'].value_counts().sort_index()
+
+# Print the frequency distribution
+print(age_distribution)
+
+# Optional: Plot the frequency distribution
+plt.figure(figsize=(10, 6))
+age_distribution.plot(kind='bar', color='skyblue')
+plt.title('Frequency Distribution of Customer Ages')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.xticks(rotation=0)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
