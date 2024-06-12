@@ -1,0 +1,13 @@
+import matplotlib.pyplot as plt
+
+# Monthly sales data (replace with your actual data)
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+sales = [1000, 1200, 1500, 1100, 1300, 1400]
+
+# Plotting bar plot of monthly sales data
+plt.bar(months, sales)
+plt.xlabel('Month')
+plt.ylabel('Sales')
+plt.title('Monthly Sales')
+plt.grid(axis='y')
+plt.show()
