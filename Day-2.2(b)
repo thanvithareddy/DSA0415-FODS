@@ -1,0 +1,18 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample dataset (replace with your actual dataset)
+data = {
+    'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    'Sales': [1000, 1200, 1500, 1100, 1300, 1400]
+}
+
+sales_data = pd.DataFrame(data)
+
+# Plotting sales over time using scatter plot
+plt.scatter(sales_data['Month'], sales_data['Sales'])
+plt.xlabel('Month')
+plt.ylabel('Sales')
+plt.title('Monthly Sales Over Time')
+plt.grid(True)
+plt.show()
