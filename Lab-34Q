@@ -1,0 +1,41 @@
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+
+# Load dataset (replace with your dataset)
+dataset = load_iris()
+X, y = dataset.data, dataset.target
+
+# Split data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model (replace with your trained model)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# User input for feature names and target variable
+feature_names = input("Enter feature names separated by commas: ").split(',')
+target_variable = input("Enter target variable: ")
+
+# Get feature indices
+feature_indices = [dataset.feature_names.index(feature_name.strip()) for feature_name in feature_names]
+
+# Select features and target variable for evaluation
+X_test_eval = X_test[:, feature_indices]
+
+# Predictions
+y_pred = model.predict(X_test_eval)
+
+# Calculate evaluation metrics
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred, average='weighted')
+recall = recall_score(y_test, y_pred, average='weighted')
+f1 = f1_score(y_test, y_pred, average='weighted')
+
+# Display evaluation metrics
+print("Evaluation Metrics:")
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1-Score:", f1)
