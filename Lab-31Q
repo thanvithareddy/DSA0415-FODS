@@ -1,0 +1,47 @@
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Sample data creation for illustration purposes
+np.random.seed(42)
+df = pd.DataFrame({
+    'area': np.random.randint(800, 4000, 100),
+    'bedrooms': np.random.randint(1, 5, 100),
+    'location': np.random.choice(['Location1', 'Location2', 'Location3'], 100),
+    'price': np.random.randint(100000, 500000, 100)
+})
+
+# Function to get user input for new house features
+def get_user_input():
+    area = float(input("Enter the area of the new house (sq ft): "))
+    bedrooms = int(input("Enter the number of bedrooms: "))
+    location = input("Enter the location of the new house (Location1, Location2, Location3): ")
+    
+    return area, bedrooms, location
+
+# Get user input
+area, bedrooms, location = get_user_input()
+
+# Encoding categorical variable 'location'
+df = pd.get_dummies(df, columns=['location'], drop_first=True)
+
+# Splitting the data into features (X) and target (y)
+X = df.drop('price', axis=1)
+y = df['price']
+
+# Building the linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Create a new dataframe for the user input
+new_house = pd.DataFrame({
+    'area': [area],
+    'bedrooms': [bedrooms],
+    'location_Location2': [1 if location == 'Location2' else 0],
+    'location_Location3': [1 if location == 'Location3' else 0]
+})
+
+# Make prediction for the new house
+predicted_price = model.predict(new_house)
+
+print(f"The predicted price of the new house is: ${predicted_price[0]:,.2f}")
