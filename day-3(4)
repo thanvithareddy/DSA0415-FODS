@@ -1,0 +1,53 @@
+import pandas as pd
+
+# Sample data
+data = {
+    'age': [25, 38, 46, 57, 64, 28, 37, 54, 45, 50, 18, 35, 20, 38, 62, 48, 55, 25],
+    'body_fat_percent': [22, 35, 33, 28, 25, 32, 34, 40, 30, 36, 18, 28, 20, 36, 27, 35, 30, 20]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Calculate mean, median, and standard deviation
+statistics = df.agg(['mean', 'median', 'std'])
+
+# Print statistics
+print(statistics)
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Draw boxplots
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+sns.boxplot(y=df['age'])
+plt.title('Boxplot of Age')
+
+plt.subplot(1, 2, 2)
+sns.boxplot(y=df['body_fat_percent'])
+plt.title('Boxplot of Body Fat Percentage')
+
+plt.tight_layout()
+plt.show()
+import matplotlib
+matplotlib.use('TkAgg')
+
+import scipy.stats as stats
+
+
+# Draw scatter plot
+plt.figure(figsize=(6, 6))
+sns.scatterplot(data=df, x='age', y='body_fat_percent')
+plt.title('Scatter Plot of Age vs Body Fat Percentage')
+plt.xlabel('Age')
+plt.ylabel('Body Fat Percentage')
+plt.show()
+
+# Draw Q-Q plot
+plt.figure(figsize=(6, 6))
+stats.probplot(df['body_fat_percent'], dist="norm", plot=plt)
+plt.title('Q-Q Plot of Body Fat Percentage')
+plt.xlabel('Theoretical Quantiles')
+plt.ylabel('Ordered Values')
+plt.show()
