@@ -1,0 +1,14 @@
+import numpy as np
+
+# Example data (response times in milliseconds)
+response_times = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+# Calculate percentiles
+q1 = np.percentile(response_times, 25)
+median = np.percentile(response_times, 50)
+q3 = np.percentile(response_times, 75)
+
+# Print results
+print("25th Percentile (Q1):", q1)
+print("50th Percentile (Median):", median)
+print("75th Percentile (Q3):", q3)
