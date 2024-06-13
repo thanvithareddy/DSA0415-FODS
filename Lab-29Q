@@ -1,0 +1,61 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Sample data creation for illustration purposes
+np.random.seed(42)
+df = pd.DataFrame({
+    'fever': np.random.randint(0, 2, 100),
+    'cough': np.random.randint(0, 2, 100),
+    'fatigue': np.random.randint(0, 2, 100),
+    'headache': np.random.randint(0, 2, 100),
+    'condition': np.random.randint(0, 2, 100)
+})
+
+# Splitting the data into features (X) and target (y)
+X = df.drop('condition', axis=1)
+y = df['condition']
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardizing the features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Function to get user input for new patient features
+def get_user_input():
+    fever = int(input("Does the patient have a fever? (0 for No, 1 for Yes): "))
+    cough = int(input("Does the patient have a cough? (0 for No, 1 for Yes): "))
+    fatigue = int(input("Does the patient feel fatigue? (0 for No, 1 for Yes): "))
+    headache = int(input("Does the patient have a headache? (0 for No, 1 for Yes): "))
+    k = int(input("Enter the value of k (number of neighbors): "))
+    
+    new_patient = np.array([[fever, cough, fatigue, headache]])
+    new_patient = scaler.transform(new_patient)
+    
+    return new_patient, k
+
+# Get user input
+new_patient, k = get_user_input()
+
+# Building and training the KNN model
+knn = KNeighborsClassifier(n_neighbors=k)
+knn.fit(X_train, y_train)
+
+# Making a prediction for the new patient
+prediction = knn.predict(new_patient)
+
+if prediction[0] == 1:
+    print("The patient is predicted to have the medical condition.")
+else:
+    print("The patient is predicted not to have the medical condition.")
+
+# Optional: Evaluate the model on the test set
+y_pred = knn.predict(X_test)
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
