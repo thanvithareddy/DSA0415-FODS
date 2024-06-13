@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+# Sample data creation for illustration purposes
+np.random.seed(42)
+df = pd.DataFrame({
+    'usage_minutes': np.random.randint(100, 1000, 100),
+    'contract_duration': np.random.randint(1, 25, 100),
+    'age': np.random.randint(18, 80, 100),
+    'monthly_charge': np.random.uniform(20, 150, 100),
+    'churn': np.random.randint(0, 2, 100)  # 0 for not churned, 1 for churned
+})
+
+# Function to get user input for new customer features
+def get_user_input():
+    usage_minutes = int(input("Enter the usage minutes per month: "))
+    contract_duration = int(input("Enter the contract duration (months): "))
+    age = int(input("Enter the age of the customer: "))
+    monthly_charge = float(input("Enter the monthly charge: "))
+    
+    return usage_minutes, contract_duration, age, monthly_charge
+
+# Get user input
+usage_minutes, contract_duration, age, monthly_charge = get_user_input()
+
+# Standardizing the features
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(df[['usage_minutes', 'contract_duration', 'age', 'monthly_charge']])
+
+# Building the logistic regression model
+model = LogisticRegression(random_state=42)
+model.fit(scaled_features, df['churn'])
+
+# Create a new dataframe for the user input
+new_customer = pd.DataFrame({
+    'usage_minutes': [usage_minutes],
+    'contract_duration': [contract_duration],
+    'age': [age],
+    'monthly_charge': [monthly_charge]
+})
+
+# Standardize the new customer data using the fitted scaler
+scaled_new_customer = scaler.transform(new_customer)
+
+# Make prediction for the new customer
+predicted_churn = model.predict(scaled_new_customer)
+probability_churn = model.predict_proba(scaled_new_customer)[0, 1]
+
+if predicted_churn[0] == 1:
+    print("The model predicts that the customer is likely to churn.")
+else:
+    print("The model predicts that the customer is not likely to churn.")
+
+print(f"Probability of churn: {probability_churn:.2f}")
